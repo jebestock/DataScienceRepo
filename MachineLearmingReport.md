@@ -3,7 +3,7 @@ Author: Jens Berkmann
 <!-- setwd("C:/Users/jb/gitrepos/MachineLearning/") -->
 
 ## Abstract
-Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. The goal of this project, is to predict the manner in which they did the exercise. By building a random forest predictor based on just 6 variables we could achieve an accuracy of 91% where training/testing were performed on 25%/75% of the training data set.
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. The goal of this project, is to predict the manner in which they did the exercise. By building a random forest predictor based on just 6 variables we could achieve an accuracy of roughly 96% where training/testing were performed on 60%/40% of the training data set.
 
 
 
@@ -88,13 +88,13 @@ According to the lecture notes a model approach based on random forests usually 
 all numerical variables included and a PCA-preprocessing step followed by looking at the importance of the individual variables. Based on this I would have tried
 to prune the tree and come up with an optimized model. HOwever, due to the mentioned limitations of my hardware I was forced to perform this
 course project in a suboptimum fashion and limit the number of variables 
-and samples a priori, e.g. reduction of feature variables above and  the size of the training set to 25%. 
+and samples a priori. 
 
 We partition the training data set in a true training set and a set for cross validation and build the model based on the training set.
 
 
 ```r
-inTrain     <- createDataPartition(finalTr$classe, p = 0.25)[[1]]
+inTrain     <- createDataPartition(finalTr$classe, p = 0.6)[[1]]
 training    <- finalTr[ inTrain,]
 testing     <- finalTr[-inTrain,]
 modFit      <- train(classe~.,data=training,method="rf")
@@ -118,21 +118,21 @@ cf_out
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1395    0    0    0    0
-##          B    0  950    0    0    0
-##          C    0    0  856    0    0
-##          D    0    0    0  804    0
-##          E    0    0    0    0  902
+##          A 3348    0    0    0    0
+##          B    0 2279    0    0    0
+##          C    0    0 2054    0    0
+##          D    0    0    0 1930    0
+##          E    0    0    0    0 2165
 ## 
 ## Overall Statistics
-##                                     
-##                Accuracy : 1         
-##                  95% CI : (0.999, 1)
-##     No Information Rate : 0.284     
-##     P-Value [Acc > NIR] : <2e-16    
-##                                     
-##                   Kappa : 1         
-##  Mcnemar's Test P-Value : NA        
+##                                 
+##                Accuracy : 1     
+##                  95% CI : (1, 1)
+##     No Information Rate : 0.284 
+##     P-Value [Acc > NIR] : <2e-16
+##                                 
+##                   Kappa : 1     
+##  Mcnemar's Test P-Value : NA    
 ## 
 ## Statistics by Class:
 ## 
@@ -152,38 +152,38 @@ cf_out
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 3939   71   12   28   13
-##          B  115 2513   99   62   69
-##          C   82  191 2360  148   92
-##          D   39   55   72 2145   37
-##          E   10   17   23   29 2494
+##          A 2177   21    1    4    1
+##          B   27 1398   38   10   19
+##          C   19   69 1286   38   19
+##          D    5   22   36 1232    5
+##          E    4    8    7    2 1398
 ## 
 ## Overall Statistics
-##                                         
-##                Accuracy : 0.914         
-##                  95% CI : (0.909, 0.919)
-##     No Information Rate : 0.284         
-##     P-Value [Acc > NIR] : <2e-16        
-##                                         
-##                   Kappa : 0.891         
-##  Mcnemar's Test P-Value : <2e-16        
+##                                        
+##                Accuracy : 0.955        
+##                  95% CI : (0.95, 0.959)
+##     No Information Rate : 0.284        
+##     P-Value [Acc > NIR] : < 2e-16      
+##                                        
+##                   Kappa : 0.943        
+##  Mcnemar's Test P-Value : 3.72e-06     
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity             0.941    0.883    0.920    0.889    0.922
-## Specificity             0.988    0.971    0.958    0.983    0.993
-## Pos Pred Value          0.969    0.879    0.821    0.914    0.969
-## Neg Pred Value          0.977    0.972    0.983    0.978    0.983
+## Sensitivity             0.975    0.921    0.940    0.958    0.969
+## Specificity             0.995    0.985    0.978    0.990    0.997
+## Pos Pred Value          0.988    0.937    0.899    0.948    0.985
+## Neg Pred Value          0.990    0.981    0.987    0.992    0.993
 ## Prevalence              0.284    0.193    0.174    0.164    0.184
-## Detection Rate          0.268    0.171    0.160    0.146    0.169
-## Detection Prevalence    0.276    0.194    0.195    0.160    0.175
-## Balanced Accuracy       0.965    0.927    0.939    0.936    0.958
+## Detection Rate          0.277    0.178    0.164    0.157    0.178
+## Detection Prevalence    0.281    0.190    0.182    0.166    0.181
+## Balanced Accuracy       0.985    0.953    0.959    0.974    0.983
 ```
 
 ## Conclusions 
 
-It is seen that within the training set the prediction works 100% perfectly while on the cross-validation test set an accuracy of 91% is achieved.
+It is seen that within the training set the prediction works 100% perfectly while on the cross-validation test set an accuracy of roughly 96% is achieved.
 We remark once more that due to hardware limitations we stop here and hope that the accuracy is sufficient to pass the testcases for the true testing set.
 
 ## Preparation of testset for testcase submission

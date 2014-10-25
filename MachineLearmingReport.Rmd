@@ -1,15 +1,15 @@
 ---
 title: 'Machine Learning: Course Project Write-Up'
 output:
+  pdf_document: default
   html_document:
     keep_md: yes
-  pdf_document: default
 ---
 Author: Jens Berkmann
 <!-- setwd("C:/Users/jb/gitrepos/MachineLearning/") -->
 
 ## Abstract
-Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. The goal of this project, is to predict the manner in which they did the exercise. By building a random forest predictor based on just 6 variables we could achieve an accuracy of 91% where training/testing were performed on 25%/75% of the training data set.
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. The goal of this project, is to predict the manner in which they did the exercise. By building a random forest predictor based on just 6 variables we could achieve an accuracy of roughly 96% where training/testing were performed on 60%/40% of the training data set.
 
 
 
@@ -74,12 +74,12 @@ According to the lecture notes a model approach based on random forests usually 
 all numerical variables included and a PCA-preprocessing step followed by looking at the importance of the individual variables. Based on this I would have tried
 to prune the tree and come up with an optimized model. HOwever, due to the mentioned limitations of my hardware I was forced to perform this
 course project in a suboptimum fashion and limit the number of variables 
-and samples a priori, e.g. reduction of feature variables above and  the size of the training set to 25%. 
+and samples a priori. 
 
 We partition the training data set in a true training set and a set for cross validation and build the model based on the training set.
 
 ```{r results="hold"}
-inTrain     <- createDataPartition(finalTr$classe, p = 0.25)[[1]]
+inTrain     <- createDataPartition(finalTr$classe, p = 0.6)[[1]]
 training    <- finalTr[ inTrain,]
 testing     <- finalTr[-inTrain,]
 modFit      <- train(classe~.,data=training,method="rf")
@@ -99,7 +99,7 @@ cf_out
 
 ## Conclusions 
 
-It is seen that within the training set the prediction works 100% perfectly while on the cross-validation test set an accuracy of 91% is achieved.
+It is seen that within the training set the prediction works 100% perfectly while on the cross-validation test set an accuracy of roughly 96% is achieved.
 We remark once more that due to hardware limitations we stop here and hope that the accuracy is sufficient to pass the testcases for the true testing set.
 
 ## Preparation of testset for testcase submission
