@@ -87,7 +87,7 @@ te  &lt;- te[, -badCols]</code></pre>
 }
 trNum      &lt;- tr[,8:146]
 teNum      &lt;- te[,8:146]</code></pre>
-<p>Further inspection of data revealed that many columns contained lots of NAs. We decided to keep only variables having no NAs. We further tried a reduction of variables by making use of the function nearZeroVar and looked at the correlation of the variables. Only nearly uncorrelated variables were kept. We finally added the column containing the desired output <em>classe</em> to the data frame containing our numerical predicting variables. This strong reduction of variables was necessary due to the fact that I have a very old laptop with Windows Vista running on it.</p>
+<p>Further inspection of data revealed that many columns contained lots of NAs. We decided to keep only variables having no NAs. We further tried a reduction of variables by making use of the function nearZeroVar and looked at the correlation of the variables. Only nearly uncorrelated variables were kept. For the parameter choice below I ended up with 6 variables only. We finally added the column containing the desired output <em>classe</em> to the data frame containing our numerical predicting variables. This strong reduction of variables was necessary due to the fact that I have a very old laptop with Windows Vista running on it.</p>
 <pre class="r"><code>trNumNASum  &lt;- apply(trNum, 2, function(x) sum(is.na(x)))
 trNum       &lt;- trNum[,trNumNASum==0]
 ColsNotOk   &lt;- nearZeroVar(trNum, saveMetrics=T)
